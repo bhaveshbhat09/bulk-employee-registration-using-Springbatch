@@ -6,15 +6,21 @@ public class BatchInfo {
     private final String status;
     private final long totalLines;
     private final long errorLines;
+    private final long movedRows;
+    private final long rejectedRows;
+    private final String approvedBy;
     private final String uploadedAt;
 
-    public BatchInfo(long batchId, String fileName, String status,
-                     long totalLines, long errorLines, String uploadedAt) {
+    public BatchInfo(long batchId, String fileName, String status, long totalLines, long errorLines,
+                     long movedRows, long rejectedRows, String approvedBy, String uploadedAt) {
         this.batchId = batchId;
         this.fileName = fileName;
         this.status = status;
         this.totalLines = totalLines;
         this.errorLines = errorLines;
+        this.movedRows = movedRows;
+        this.rejectedRows = rejectedRows;
+        this.approvedBy = approvedBy;
         this.uploadedAt = uploadedAt;
     }
 
@@ -23,6 +29,9 @@ public class BatchInfo {
     public String getStatus() { return status; }
     public long getTotalLines() { return totalLines; }
     public long getErrorLines() { return errorLines; }
+    public long getMovedRows() { return movedRows; }
+    public long getRejectedRows() { return rejectedRows; }
+    public String getApprovedBy() { return approvedBy; }
     public String getUploadedAt() { return uploadedAt; }
     public boolean isErrorFileAvailable() { return "REJECTED".equals(status); }
 }

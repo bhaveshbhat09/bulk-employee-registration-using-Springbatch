@@ -10,7 +10,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     // Root context: shared beans such as DataSource and Batch (added in later steps)
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] { RootConfig.class, BatchConfig.class, ReadJobConfig.class, ValidateJobConfig.class };
+        return new Class<?>[] { RootConfig.class, BatchConfig.class, ReadJobConfig.class, ValidateJobConfig.class, ApproveJobConfig.class };
     }
     // Web context: controllers and MVC settings
     @Override

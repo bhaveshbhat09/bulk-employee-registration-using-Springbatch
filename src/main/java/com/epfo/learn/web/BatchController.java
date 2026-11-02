@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/batches")
@@ -57,5 +59,29 @@ public class BatchController {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> badRequest(IllegalArgumentException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+        @PostMapping("/{id}/approve")
+    public ResponseEntity<BatchInfo> approve(@PathVariable long id,
+                                             @RequestParam(defaultValue = "tester") String approvedBy)
+            throws Exception {
+        BatchInfo info = batchService.approve(id, approvedBy);
+        if (info == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(info);
+    }
+
+    @GetMapping("/{id}/rejected-rows")
+    public ResponseEntity<List<Map<String, Object>>> rejectedRows(@PathVariable long id) {
+        if (batchService.getBatch(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(batchService.rejectedRows(id));
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<String> conflict(IllegalStateException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 }
